@@ -36,8 +36,7 @@
 	  					<td>
 	  						<input id="index_input_pass" type="text" name="pass" placeholder="PASSWORD"/>
 	  						<input type="hidden" name="cmd" value="login" />
-	  						<input type="hidden" name="dir" value="bitcamp" />
-	  						<input type="hidden" name="page" value="main" />
+	  						<input type="hidden" name="page" value="mypage" />
 	  					</td>
 	  				</tr>
 	  			 </table>	
@@ -67,7 +66,7 @@
 	document.querySelector('#go_join_link').addEventListener("click",
 		function(){
 		alert('회원이 아니신가요?');
-		location.href ="${ctx}/user/join.do"
+		location.href ="${ctx}/user.do?cmd=move&page=join"
 	},false);
 	
 	document.querySelector('#go_jdbc_link').addEventListener("click",

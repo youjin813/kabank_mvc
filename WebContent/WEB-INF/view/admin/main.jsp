@@ -27,6 +27,8 @@
 					<select name="admin_list" id="admin_main">
 						<option value="member">회원</option>
 						<option value="attend">출석</option>
+						<option value="bank">은행</option>
+						<option value="mobile">통신사</option>
 					</select>
 					<button name="create" id="create">생 성</button>
 				</form>

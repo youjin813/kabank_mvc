@@ -12,7 +12,8 @@ public class MainTest {
 		}
 		StringBuffer buff = new StringBuffer(DMLEnum.SELECT.toString());
 		System.out.println("기본 버프" +buff);
-		buff.insert(6, " "+MemberEnum.PROPERTIES.toString()).append(TnameEnum.MEMBER.toString());
+
+		buff.insert(6," "+MemberEnum.PROPERTIES.toString()).append(TnameEnum.MEMBER.toString()).append(" WHERE id = '%s' AND pass = '%s'");
 		System.out.println("추가된 버프:" +buff);
 	}
 

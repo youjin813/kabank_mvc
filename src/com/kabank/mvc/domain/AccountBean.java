@@ -1,5 +1,9 @@
 package com.kabank.mvc.domain;
 
-public class AccountBean {
+import lombok.Data;
 
-}
+@Data
+public class AccountBean {
+		private String customer_num,account_num,money,id;
+	}
+

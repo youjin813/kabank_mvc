@@ -1,16 +1,18 @@
 package com.kabank.mvc.daoImpl;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.kabank.mvc.command.InitCommand;
 import com.kabank.mvc.dao.MemberDAO;
+import com.kabank.mvc.domain.AccountBean;
 import com.kabank.mvc.domain.MemberBean;
 import com.kabank.mvc.enums.DMLEnum;
-import com.kabank.mvc.enums.ResultEnum;
 import com.kabank.mvc.enums.MemberEnum;
 import com.kabank.mvc.enums.OracleEnum;
+import com.kabank.mvc.enums.ResultEnum;
 import com.kabank.mvc.enums.TnameEnum;
 import com.kabank.mvc.enums.Vendor;
 import com.kabank.mvc.factory.DatabaseFactory;
@@ -51,31 +53,12 @@ public class MemberDAOImpl implements MemberDAO{
 	}
 
 	@Override
-	public void insertMember(MemberBean a) {
-		System.out.println("insert들어옴========");
-		System.out.println("ID : " + a.getId());
-		try {
-			StringBuffer buffer = new StringBuffer(DMLEnum.INSERT.toString());
-			buffer.insert(11, " "+TnameEnum.MEMBER.toString()+" ("+MemberEnum.PROPERTIES.toString()+")")
-			.append(ResultEnum.PERCENT.getValue());
-			System.out.println("버퍼====="+buffer);
-			DatabaseFactory.create(Vendor.ORACLE).getConnection()
-			.createStatement()
-			.executeUpdate(String.format(buffer.toString(),
-					a.getId(),a.getPass(),a.getName(),a.getSsn(),a.getPhone(),a.getEmail(),a.getProfile(),a.getAddr()));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}	
-	}
-
-	@Override
 	public MemberBean selectMemberById(MemberBean m) {
 		System.out.println("======selectMemberById()IN====================");
 		MemberBean mem = null;
 		try {
 			StringBuffer buff = new StringBuffer(DMLEnum.SELECT.toString());
-			buff.insert(6, " "+MemberEnum.PROPERTIES.toString()).append(TnameEnum.MEMBER.toString());
-			buff.append("WHERE id = '%s' AND pass = '%s'");
+			buff.insert(6," "+MemberEnum.PROPERTIES.toString()).append(TnameEnum.MEMBER.toString()).append(" WHERE id = '%s' AND pass = '%s'");
 			System.out.println("=============="+buff);
 			ResultSet rs = DatabaseFactory.create(Vendor.ORACLE).getConnection()
 			.createStatement()
@@ -102,11 +85,11 @@ public class MemberDAOImpl implements MemberDAO{
 	@Override
 	public MemberBean login() {
 		System.out.println("===MEMBER-D: LOGIN IN=========");
-		StringBuffer sql = new StringBuffer(
-				MemberEnum.LOGIN.toString());
+		StringBuffer sql = new StringBuffer(MemberEnum.LOGIN.toString());
 		String[] arr = InitCommand.cmd.getData().split("/");
-		System.out.println("ID"+arr[0]);
-		System.out.println("PASS"+arr[1]);
+		System.out.println("=====MEMBERDAOIMPL LOGIN DATA"+InitCommand.cmd.getData());
+		System.out.println("ID :"+arr[0]);
+		System.out.println("PASS :"+arr[1]);
 		sql.replace(sql.indexOf("$"), sql.indexOf("$")+1, arr[0]);
 		sql.replace(sql.indexOf("@"), sql.indexOf("@")+1, arr[1]);
 		System.out.println("::::SQL::::"+sql.toString());
@@ -130,7 +113,68 @@ public class MemberDAOImpl implements MemberDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("===MEMBER-D: LOGIN OUT=========");
+		System.out.println("===MEMBER-D: LOGIN OUT=========\n"+member.toString());
 		return member;
 	}
+
+	@Override
+	public void updatePass(MemberBean member) {
+		System.out.println("====MEMBER-D: updatePass====");
+		System.out.println("memberupdatePass member = "+ member.getPass());
+		System.out.println("memberupdatePass :"+InitCommand.cmd.getData());
+		try {
+			StringBuffer sql = new StringBuffer(DMLEnum.UPDATEPASS.toString());
+			sql.replace(sql.indexOf("$"), sql.indexOf("$")+1,member.getId());
+			sql.replace(sql.indexOf("@"), sql.indexOf("@")+1, member.getPass());
+			System.out.println("======================"+member.getId());
+			System.out.println("======================"+member.getPass());
+			ResultSet rs = DatabaseFactory.create(Vendor.ORACLE).
+					getConnection().
+					createStatement().
+					executeQuery(sql.toString());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("====MEMBER-D: updatePass OUT====");
+	}
+	
+	@Override
+	public void deleteMember() {
+		System.out.println("===MEMBER-D: delete IN=========");
+		StringBuffer sql = new StringBuffer(DMLEnum.DELETE.toString()); 
+		sql.replace(sql.indexOf("@"), sql.indexOf("@")+1, InitCommand.cmd.getData());
+		System.out.println("================="+InitCommand.cmd.getData());
+		System.out.println(sql+"------------------------");
+		try {
+			DatabaseFactory.create(Vendor.ORACLE)
+			.getConnection()
+			.createStatement()
+			.executeQuery(sql.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@Override
+	public void joinMember() {
+		// TODO Auto-generated method stub
+		
+	}
 }
+
+//	@Override
+//	public void joinMember() {
+//		System.out.println("=====MEMBER D JOIN IN======");
+//		String sql;
+//		try {
+//			DatabaseFactory.create(Vendor.ORACLE)
+//			.getConnection()
+//			.createStatement()
+//			.executeUpdate(sql.toString());
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		System.out.println("=====MEMBER D JOIN OUT======");
+//			}
+//		}
+

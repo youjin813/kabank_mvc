@@ -28,6 +28,30 @@ public enum DDLEnum {
 					+"status VARCHAR2(20)"
 					+")";
 			}
+		},
+		CREATE_TABLE_BANK{
+			@Override
+			public String toString() {
+				return "CREATE TABLE Bank("
+						+"customer_num int PRIMARY KEY,"
+						+"account_num VARCHAR2(20),"
+						+"money VARCHAR2(20) default 0,"
+						+"id VARCHAR2(20),"
+						+"FOREIGN KEY(id) REFERENCES Member(id) ON DELETE CASCADE"
+						+ ")";
+			}
+		},
+		CREATE_TABLE_MOBILE{
+			@Override
+			public String toString() {
+				return "CREATE TABLE Mobile("
+						+"customer_num int PRIMARY KEY,"
+						+"phone VARCHAR2(20),"
+						+"reg_date date,"
+						+"telecom VARCHAR2(20),"
+						+"id VARCHAR2(20),"
+						+"FOREIGN KEY(id) REFERENCES Member(id) ON DELETE CASCADE";
+			}
 		}
 	}
 

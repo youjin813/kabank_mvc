@@ -16,13 +16,22 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public void join(MemberBean a) {
-	System.out.println(a.getId());
-		MemberDAOImpl.getInstance().insertMember(a);
+	public void join() {
+		MemberDAOImpl.getInstance().joinMember();
 	}
 
 	@Override
 	public MemberBean login() {
 		return MemberDAOImpl.getInstance().login();
+	}
+
+	@Override
+	public void changePass(MemberBean member) {
+		MemberDAOImpl.getInstance().updatePass(member);
+	}
+
+	@Override
+	public void delete() {
+		MemberDAOImpl.getInstance().deleteMember();
 	}
 }

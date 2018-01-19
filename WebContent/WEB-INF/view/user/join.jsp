@@ -7,7 +7,7 @@
  </header>
  <section>
  <article>
- <form name="join_form" action="${pageContext.request.contextPath }/user/signup.do"> 
+ <form name="join_form" action="${ctx}/user.do"> 
 	<table>
 		<tr>	
 			<td>아이디</td>
@@ -93,13 +93,12 @@
 <%@ include file="../common/footer.jsp"%>
 </body>
 <script>
-	var joinConfirmBtn = document.querySelector('#join_confirm_btn');
-		joinConfirmBtn.addEventListener('click',joinConfirm,false);
-	function joinConfirm() {
-		alert("회원강비");
-		var form = document.querySelector('#join_form');
-		form.submit; 
-	}
+	document.querySelector('#join_confirm_btn').addEventListener('click',
+		function(){
+		alert("회원가입하시겠습니까");
+		document.querySelector('#join_form').submit;
+		},false);
+
 	
 </script>
 </html>

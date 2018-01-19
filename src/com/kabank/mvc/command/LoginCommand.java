@@ -16,7 +16,7 @@ public class LoginCommand implements IOrder{
 		String id = String.valueOf(map.get("id"));
 		String pass = String.valueOf(map.get("pass"));
 		InitCommand.cmd.setColumn("id/pass");
-		InitCommand.cmd.setData(id+"/"+pass);;
+		InitCommand.cmd.setData(id+"/"+pass);
 
 	}
 	

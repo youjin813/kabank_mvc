@@ -1,5 +1,5 @@
 package com.kabank.mvc.service;
 
-public interface AccountService {
+public interface AttendService {
 
 }
