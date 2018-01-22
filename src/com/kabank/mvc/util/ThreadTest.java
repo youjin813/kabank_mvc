@@ -37,5 +37,5 @@ class User implements Runnable{
 	public void run() {
 		atm.inchul(name);
 	}
-	
+	//
 }
