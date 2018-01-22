@@ -1,9 +1,10 @@
 package com.kabank.mvc.dao;
 
-import com.kabank.mvc.domain.AccountBean;
+import com.kabank.mvc.command.Command;
+import com.kabank.mvc.command.ResultMap;
 
 public interface BankDAO {
-	public void createAccount(String r);
+	public ResultMap createAccount(Command cmd);
 	
-	public AccountBean selectBanKById(String id);	
+	public ResultMap selectBanKById(Command cmd);	
 }

@@ -1,10 +1,11 @@
 package com.kabank.mvc.service;
 
-import com.kabank.mvc.domain.MobileBean;
+import com.kabank.mvc.command.Command;
+import com.kabank.mvc.command.ResultMap;
 
 public interface MobileService {
 
-	public void open();
+	public ResultMap open(Command cmd);
 
-	public MobileBean findMobileById(String id);
+	public ResultMap findMobileById(Command cmd);
 }

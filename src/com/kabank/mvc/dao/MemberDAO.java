@@ -1,21 +1,20 @@
 package com.kabank.mvc.dao;
 
-import java.util.List;
-
-import com.kabank.mvc.domain.MemberBean;
+import com.kabank.mvc.command.Command;
+import com.kabank.mvc.command.ResultMap;
 
 public interface MemberDAO {
-	public List<MemberBean> selectMembers();
+	public ResultMap selectMembers(Command cmd);
 
-	public MemberBean selectMemberById(MemberBean m);
+	public ResultMap selectMemberById(Command cmd);
 
-	public MemberBean login();
+	public ResultMap login(Command cmd);
 
-	public void updatePass(MemberBean member);
+	public ResultMap updatePass(Command cmd);
 
-	public void deleteMember();
+	public ResultMap deleteMember(Command cmd);
 
-	public void joinMember();
+	public ResultMap joinMember(Command cmd);
 
 
 

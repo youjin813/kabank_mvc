@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import com.kabank.mvc.command.Command;
 import com.kabank.mvc.command.InitCommand;
 import com.kabank.mvc.command.MoveCommand;
 import com.kabank.mvc.domain.MemberBean;
@@ -32,11 +33,12 @@ public class MobileController extends HttpServlet {
 			System.out.println("---TELECOM CONTROLLER MOVE OUT---");
 			break;
 		case OPEN_PHONE:
+			Command cmd = new Command();
 			System.out.println("---PHONE CONTROLLER PHONE_OPEN IN---");
 			InitCommand.cmd.setData(((MemberBean)session.getAttribute("user")).getId());
 			System.out.println("세션 있는 멤버:"+((MemberBean) session.getAttribute("user")).toString());
 			System.out.println("가져온 아이디:"+((MemberBean) session.getAttribute("user")).getId());
-			MobileServiceImpl.getInstance().open();
+			MobileServiceImpl.getInstance().open(cmd);
 			session.getAttribute(InitCommand.cmd.getData());
 			new MoveCommand(request).execute();
 			DispatcherServlet.send(request, response);

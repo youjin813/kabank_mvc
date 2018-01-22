@@ -1,5 +1,7 @@
 package com.kabank.mvc.serviceImpl;
 
+import com.kabank.mvc.command.Command;
+import com.kabank.mvc.command.ResultMap;
 import com.kabank.mvc.daoImpl.BankDAOImpl;
 import com.kabank.mvc.domain.AccountBean;
 import com.kabank.mvc.domain.MemberBean;
@@ -12,15 +14,15 @@ public class BankServiceImpl implements BankService{
 	private BankServiceImpl() {
 	}
 	@Override
-	public void create() {
+	public ResultMap create(Command cmd) {
 		String account = String.valueOf((int)(Math.random()*8999+1000)+"-"
 				+(int)(Math.random()*8999+1000)+"-"+(int)(Math.random()*8999+1000));
-		BankDAOImpl.getInstance().createAccount(account);
+		return BankDAOImpl.getInstance().createAccount(cmd);
 	}
 
 	@Override
-	public AccountBean findAccountById(String id) {
-		return BankDAOImpl.getInstance().selectBanKById(id);
+	public ResultMap findAccountById(Command cmd) {
+		return BankDAOImpl.getInstance().selectBanKById(cmd);
 	}
 
 }

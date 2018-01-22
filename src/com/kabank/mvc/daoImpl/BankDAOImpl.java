@@ -3,7 +3,9 @@ package com.kabank.mvc.daoImpl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.kabank.mvc.command.Command;
 import com.kabank.mvc.command.InitCommand;
+import com.kabank.mvc.command.ResultMap;
 import com.kabank.mvc.dao.BankDAO;
 import com.kabank.mvc.domain.AccountBean;
 import com.kabank.mvc.domain.MemberBean;
@@ -27,28 +29,29 @@ public class BankDAOImpl implements BankDAO{
 	}
 
 	@Override
-	public void createAccount(String account) {
+	public ResultMap createAccount(Command cmd) {
 			System.out.println("===DAOIMPL: createAccount IN=========");
 			String sql = DMLEnum.CREATEACCOUNT.toString();
 			System.out.println("===DAOIMPL:========="+sql);
-			System.out.println("멤버 서비스 임플 계좌 생성"+account);
+			//System.out.println("멤버 서비스 임플 계좌 생성"+account);
 			try {
 				DatabaseFactory.create(Vendor.ORACLE)
 						.getConnection()
 						.createStatement()
-						.executeUpdate(String.format(sql ,account, "100",InitCommand.cmd.getData()));
+						.executeUpdate(String.format(sql ,000, "100",InitCommand.cmd.getData()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		System.out.println("===DAOIMPL: createAccount OUT=========");
+		return null;
 	}
 
 	@Override
-	public AccountBean selectBanKById(String id) {
+	public ResultMap selectBanKById(Command cmd) {
 		System.out.println("====SelectAccountById 입장====");
 		StringBuffer sql = new StringBuffer(MemberEnum.SELECTACCOUNTBYID.toString());
-		sql.replace(sql.indexOf("$"), sql.indexOf("$")+1,id);
-		System.out.println("====SELECTACCOUNTBYID===="+id);
+		//sql.replace(sql.indexOf("$"), sql.indexOf("$")+1,cmd);
+		System.out.println("====SELECTACCOUNTBYID===="+cmd);
 		System.out.println("SELECTACCOUNTBYID SQL문"+sql);
 		AccountBean account = null;
 		try {
@@ -66,7 +69,7 @@ public class BankDAOImpl implements BankDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return account;
+		return null;
 	}
 
 

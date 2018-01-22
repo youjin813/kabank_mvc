@@ -1,11 +1,12 @@
 package com.kabank.mvc.dao;
 
-import com.kabank.mvc.domain.MemberBean;
+import com.kabank.mvc.command.Command;
+import com.kabank.mvc.command.ResultMap;
 
 public interface MobileDAO {
 
-	public void openNumber(String number);
+	public ResultMap openNumber(Command cmd);
 
-	public MemberBean SelectMobileById(String id);
+	public ResultMap SelectMobileById(Command cmd);
 
 }

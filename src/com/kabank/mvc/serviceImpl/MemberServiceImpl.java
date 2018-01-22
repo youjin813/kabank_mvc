@@ -1,6 +1,8 @@
 package com.kabank.mvc.serviceImpl;
 
 
+import com.kabank.mvc.command.Command;
+import com.kabank.mvc.command.ResultMap;
 import com.kabank.mvc.daoImpl.MemberDAOImpl;
 import com.kabank.mvc.domain.MemberBean;
 import com.kabank.mvc.service.MemberService;
@@ -11,27 +13,27 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public MemberBean findMemberById(MemberBean m) {
-		return MemberDAOImpl.getInstance().selectMemberById(m);
+	public ResultMap findMemberById(Command cmd) {
+		return MemberDAOImpl.getInstance().selectMemberById(cmd);
 	}
 
 	@Override
-	public void join() {
-		MemberDAOImpl.getInstance().joinMember();
+	public ResultMap join(Command cmd) {
+		return MemberDAOImpl.getInstance().joinMember(cmd);
 	}
 
 	@Override
-	public MemberBean login() {
-		return MemberDAOImpl.getInstance().login();
+	public ResultMap login(Command cmd) {
+		return MemberDAOImpl.getInstance().login(cmd);
 	}
 
 	@Override
-	public void changePass(MemberBean member) {
-		MemberDAOImpl.getInstance().updatePass(member);
+	public ResultMap changePass(Command cmd) {
+		return MemberDAOImpl.getInstance().updatePass(cmd);
 	}
 
 	@Override
-	public void delete() {
-		MemberDAOImpl.getInstance().deleteMember();
+	public ResultMap delete(Command cmd) {
+		return MemberDAOImpl.getInstance().deleteMember(cmd);
 	}
 }

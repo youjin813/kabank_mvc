@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kabank.mvc.command.Command;
 import com.kabank.mvc.enums.PathEnum;
 import com.kabank.mvc.service.CommonService;
 import com.kabank.mvc.serviceImpl.CommonServiceImpl;
@@ -22,7 +23,8 @@ public class CommonController extends HttpServlet {
 		System.out.println("===========서블릿 내부============");
 		String dir = request.getServletPath().split(PathEnum.SEPARATOR.getValue())[1];
 		String dest = request.getServletPath().split(PathEnum.SEPARATOR.getValue())[2].split(PathEnum.DOT.getValue())[0];
-		request.setAttribute("count",service.countTable());
+		Command cmd = new Command();
+		request.setAttribute("count",service.countTable(cmd));
 		request.getRequestDispatcher(PathEnum.VIEW.getValue()+dir+PathEnum.SEPARATOR.getValue()+dest+PathEnum.EXTENSION.toString()).forward(request, response);
 	}
 

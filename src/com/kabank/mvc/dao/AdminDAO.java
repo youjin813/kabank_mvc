@@ -1,8 +1,11 @@
 package com.kabank.mvc.dao;
 
+import com.kabank.mvc.command.Command;
+import com.kabank.mvc.command.ResultMap;
+
 public interface AdminDAO {
 
-	public void createTable(String sql);
+	public ResultMap createTable(Command cmd);
 
 
 }

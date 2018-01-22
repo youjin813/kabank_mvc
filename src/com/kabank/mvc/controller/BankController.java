@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kabank.mvc.command.Command;
 import com.kabank.mvc.command.InitCommand;
 import com.kabank.mvc.command.MoveCommand;
 import com.kabank.mvc.domain.MemberBean;
@@ -31,11 +32,12 @@ public class BankController extends HttpServlet {
 			System.out.println("=======BANK CONTROLLER :MOVE OUT==========");
 			break;
 		case CREATE_ACCOUNT:
+			Command cmd = new Command();
 			System.out.println("=======BANK CONTROLLER :CREATE_ACCOUNT IN==========");
 			System.out.println("세션 있는 멤버:"+((MemberBean) session.getAttribute("user")).toString());
 			InitCommand.cmd.setData(((MemberBean)session.getAttribute("user")).getId());
 			System.out.println("++++++++++"+InitCommand.cmd.getData());
-			BankServiceImpl.getInstance().create();
+			BankServiceImpl.getInstance().create(cmd);
 			session.getAttribute(InitCommand.cmd.getData());
 			new MoveCommand(request).execute();
 			DispatcherServlet.send(request, response);

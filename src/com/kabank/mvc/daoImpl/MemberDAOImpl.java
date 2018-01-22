@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kabank.mvc.command.Command;
 import com.kabank.mvc.command.InitCommand;
+import com.kabank.mvc.command.ResultMap;
 import com.kabank.mvc.dao.MemberDAO;
 import com.kabank.mvc.domain.AccountBean;
 import com.kabank.mvc.domain.MemberBean;
@@ -32,7 +34,7 @@ public class MemberDAOImpl implements MemberDAO{
 	}
 	
 	@Override
-	public List<MemberBean> selectMembers() {
+	public ResultMap selectMembers(Command cmd) {
 		List<MemberBean> result = new ArrayList<>();  
 	try {
 		StringBuffer buff = new StringBuffer(DMLEnum.SELECT.toString());
@@ -49,11 +51,11 @@ public class MemberDAOImpl implements MemberDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+		return null;
 	}
 
 	@Override
-	public MemberBean selectMemberById(MemberBean m) {
+	public ResultMap selectMemberById(Command cmd) {
 		System.out.println("======selectMemberById()IN====================");
 		MemberBean mem = null;
 		try {
@@ -64,7 +66,7 @@ public class MemberDAOImpl implements MemberDAO{
 			.createStatement()
 			.executeQuery(
 					String.format(
-					buff.toString(), m.getId(), m.getPass()));
+					buff.toString(), "m.getId()", "m.getPass()"));
 			while(rs.next()) {
 				mem = new MemberBean();
 				mem.setId(rs.getString(ResultEnum.ID.getValue()));
@@ -79,11 +81,11 @@ public class MemberDAOImpl implements MemberDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("=============:"+m.toString()+"==========");
-		return mem;
+		//System.out.println("=============:"+m.toString()+"==========");
+		return null;
 	}
 	@Override
-	public MemberBean login() {
+	public ResultMap login(Command cmd) {
 		System.out.println("===MEMBER-D: LOGIN IN=========");
 		StringBuffer sql = new StringBuffer(MemberEnum.LOGIN.toString());
 		String[] arr = InitCommand.cmd.getData().split("/");
@@ -114,32 +116,34 @@ public class MemberDAOImpl implements MemberDAO{
 			e.printStackTrace();
 		}
 		System.out.println("===MEMBER-D: LOGIN OUT=========\n"+member.toString());
-		return member;
+		return null;
 	}
 
 	@Override
-	public void updatePass(MemberBean member) {
-		System.out.println("====MEMBER-D: updatePass====");
-		System.out.println("memberupdatePass member = "+ member.getPass());
-		System.out.println("memberupdatePass :"+InitCommand.cmd.getData());
-		try {
-			StringBuffer sql = new StringBuffer(DMLEnum.UPDATEPASS.toString());
-			sql.replace(sql.indexOf("$"), sql.indexOf("$")+1,member.getId());
-			sql.replace(sql.indexOf("@"), sql.indexOf("@")+1, member.getPass());
-			System.out.println("======================"+member.getId());
-			System.out.println("======================"+member.getPass());
-			ResultSet rs = DatabaseFactory.create(Vendor.ORACLE).
-					getConnection().
-					createStatement().
-					executeQuery(sql.toString());
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println("====MEMBER-D: updatePass OUT====");
+	public ResultMap updatePass(Command cmd) {
+			System.out.println("====MEMBER-D: updatePass====");
+			MemberBean member = null;
+			System.out.println("memberupdatePass member = "+ member.getPass());
+			System.out.println("memberupdatePass :"+InitCommand.cmd.getData());
+			try {
+				StringBuffer sql = new StringBuffer(DMLEnum.UPDATEPASS.toString());
+				sql.replace(sql.indexOf("$"), sql.indexOf("$")+1,member.getId());
+				sql.replace(sql.indexOf("@"), sql.indexOf("@")+1, member.getPass());
+				System.out.println("======================"+member.getId());
+				System.out.println("======================"+member.getPass());
+				ResultSet rs = DatabaseFactory.create(Vendor.ORACLE).
+						getConnection().
+						createStatement().
+						executeQuery(sql.toString());
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			System.out.println("====MEMBER-D: updatePass OUT====");
+		return null;
 	}
 	
 	@Override
-	public void deleteMember() {
+	public ResultMap deleteMember(Command cmd) {
 		System.out.println("===MEMBER-D: delete IN=========");
 		StringBuffer sql = new StringBuffer(DMLEnum.DELETE.toString()); 
 		sql.replace(sql.indexOf("@"), sql.indexOf("@")+1, InitCommand.cmd.getData());
@@ -153,11 +157,11 @@ public class MemberDAOImpl implements MemberDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 	@Override
-	public void joinMember() {
-		// TODO Auto-generated method stub
-		
+	public ResultMap joinMember(Command cmd) {
+		return null;		
 	}
 }
 

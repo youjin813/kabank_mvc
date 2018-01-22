@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import com.kabank.mvc.command.Command;
+import com.kabank.mvc.command.ResultMap;
 import com.kabank.mvc.dao.CommonDAO;
 import com.kabank.mvc.enums.DMLEnum;
 import com.kabank.mvc.enums.OracleEnum;
@@ -12,7 +14,7 @@ import com.kabank.mvc.enums.TnameEnum;
 public class CommonDAOImpl implements CommonDAO{
 
 	@Override
-	public String selectTableCount() {
+	public ResultMap selectTableCount(Command cmd) {
 		String count = "";
 		try {
 			Class.forName(OracleEnum.ORACLE_DRIVER.getValue());
@@ -27,6 +29,6 @@ public class CommonDAOImpl implements CommonDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return count;
+		return null;
 	}
 }

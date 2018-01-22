@@ -1,5 +1,7 @@
 package com.kabank.mvc.serviceImpl;
 
+import com.kabank.mvc.command.Command;
+import com.kabank.mvc.command.ResultMap;
 import com.kabank.mvc.daoImpl.MobileDAOImpl;
 import com.kabank.mvc.domain.MemberBean;
 import com.kabank.mvc.domain.MobileBean;
@@ -11,15 +13,16 @@ public class MobileServiceImpl implements MobileService{
 	}
 
 	@Override
-	public void open() {
+	public ResultMap open(Command cmd) {
 		String number = "010"+"-"+String.valueOf((int)(Math.random()*8999+1000))+"-"
 				+(int)(Math.random()*8999+1000);
 		System.out.println("----생성된 전화 번호---"+number);
-		MobileDAOImpl.getInstance().openNumber(number);
+		MobileDAOImpl.getInstance().openNumber(cmd);
+		return null;
 	}
 
 	@Override
-	public MobileBean findMobileById(String id) {
+	public ResultMap findMobileById(Command cmd) {
 		return null;
 	}
 

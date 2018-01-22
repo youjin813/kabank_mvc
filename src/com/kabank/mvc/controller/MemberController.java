@@ -15,6 +15,7 @@ import com.kabank.mvc.command.DeleteCommand;
 import com.kabank.mvc.command.InitCommand;
 import com.kabank.mvc.command.JoinCommand;
 import com.kabank.mvc.command.MoveCommand;
+import com.kabank.mvc.command.ResultMap;
 import com.kabank.mvc.command.LoginCommand;
 import com.kabank.mvc.domain.AccountBean;
 import com.kabank.mvc.domain.FoodBean;
@@ -40,6 +41,7 @@ public class MemberController extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		InitCommand init = new InitCommand(request);
+		Command cmd = null;
 		init.execute();
 		MemberBean member =null;
 		switch (InitCommand.cmd.getAction()) {
@@ -69,6 +71,7 @@ public class MemberController extends HttpServlet {
 			mypage(request);
 			break;	
 		case CHANGE_PASS:
+			cmd = new Command();
 			System.out.println("=======MEMBER :CHANGE IN==========");
 			member = new MemberBean();
 			new ChangeCommand(request).execute();
@@ -76,7 +79,7 @@ public class MemberController extends HttpServlet {
 			String id = ((MemberBean) session.getAttribute("user")).getId();
 			member.setId(id);
 			member.setPass(InitCommand.cmd.getData());
-			MemberServiceImpl.getInstance().changePass(member);	
+			MemberServiceImpl.getInstance().changePass(cmd);	
 			member=(MemberBean) session.getAttribute("user");
 			session.setAttribute("user", member);
 			System.out.println("변경확인");
@@ -88,9 +91,10 @@ public class MemberController extends HttpServlet {
 			break;
 		case DELETE:
 			System.out.println("=======MEMBER :DELETE IN==========");
+			cmd = new Command();
 			new DeleteCommand(request).execute();
 			System.out.println(InitCommand.cmd.getData()+"11111111111111111111");
-			MemberServiceImpl.getInstance().delete();
+			MemberServiceImpl.getInstance().delete(cmd);
 			session.invalidate();
 			move(request);
 			DispatcherServlet.send(request, response);
@@ -98,8 +102,9 @@ public class MemberController extends HttpServlet {
 			break;
 		case JOIN:
 			System.out.println("==============MEMBER-C : JOIN IN===========");
+			cmd = new Command();
 			new JoinCommand(request).execute();
-			MemberServiceImpl.getInstance().join();
+			MemberServiceImpl.getInstance().join(cmd);
 			new MoveCommand(request).execute();
 			DispatcherServlet.send(request, response);
 			System.out.println("==============MEMBER-C : JOIN OUT===========");
@@ -111,7 +116,8 @@ public class MemberController extends HttpServlet {
 
 	private void login(HttpServletRequest request,HttpSession session) {
 		new LoginCommand(request).execute();
-		MemberBean member = MemberServiceImpl.getInstance().login();
+		Command cmd = new Command();
+		ResultMap member = MemberServiceImpl.getInstance().login(cmd);
 		if(member==null) {
 			InitCommand.cmd.setDir("user");
 			InitCommand.cmd.setPage("login");
@@ -133,14 +139,15 @@ public class MemberController extends HttpServlet {
 		HttpSession session = request.getSession();
 		MemberBean member = (MemberBean) session.getAttribute("user");
 		//기본값은 무조건 있을것이다 그래서 널 체크가 필요없다 하지만 추가되는 객체 account phone 는 널일수 있다
-		AccountBean a = BankServiceImpl.getInstance().findAccountById(member.getId());
-		MobileBean m = MobileServiceImpl.getInstance().findMobileById(member.getId());
-		LottoBean l = LottoServiceImpl.getInstance().findLottoById(member.getId());
-		FoodBean f = FoodServiceImpl.getInstance().findFoodById(member.getId());
-		if(a!=null) {member.setAccount(a);}
-		if(m!=null) {member.setMobile(m);}
-		if(l!=null) {member.setLotto(l);}
-		if(f!=null) {member.setFood(f);}
+		Command cmd = new Command();
+		ResultMap a = BankServiceImpl.getInstance().findAccountById(cmd);
+		ResultMap m = MobileServiceImpl.getInstance().findMobileById(cmd);
+		ResultMap l = LottoServiceImpl.getInstance().findLottoById(cmd);
+		ResultMap f = FoodServiceImpl.getInstance().findFoodById(cmd);
+		//if(a!=null) {member.setAccount(a);}
+		//if(m!=null) {member.setMobile(m);}
+		//if(l!=null) {member.setLotto(l);}
+		//if(f!=null) {member.setFood(f);}
 		session.setAttribute("user", member);
 		}
 }

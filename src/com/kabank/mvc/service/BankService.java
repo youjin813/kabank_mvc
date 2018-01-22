@@ -1,11 +1,12 @@
 package com.kabank.mvc.service;
 
-import com.kabank.mvc.domain.AccountBean;
+import com.kabank.mvc.command.Command;
+import com.kabank.mvc.command.ResultMap;
 
 public interface BankService {
 
-	public void create();
+	public ResultMap create(Command cmd);
 
-	public AccountBean findAccountById(String id);
+	public ResultMap findAccountById(Command cmd);
 
 }

@@ -1,6 +1,8 @@
 package com.kabank.mvc.daoImpl;
 
 
+import com.kabank.mvc.command.Command;
+import com.kabank.mvc.command.ResultMap;
 import com.kabank.mvc.dao.AdminDAO;
 import com.kabank.mvc.enums.Vendor;
 import com.kabank.mvc.factory.DatabaseFactory;
@@ -8,18 +10,13 @@ import com.kabank.mvc.factory.DatabaseFactory;
 public class AdminDAOImpl implements AdminDAO{
 
 	@Override
-	public void createTable(String sql) {
+	public ResultMap createTable(Command cmd) {
 			System.out.println("===MEMBER-D: delete IN=========");
-			System.out.println(sql);
-			try {
-				DatabaseFactory.create(Vendor.ORACLE)
-				.getConnection()
-				.createStatement()
-				.executeUpdate(sql);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}}
+			System.out.println(cmd);
+			return null;
+			
+		}
+	}
 /*	StringBuffer buff = new StringBuffer(DMLEnum.SELECT.toString());
 	buff.insert(11, " "+TnameEnum.tab.toString());
 	buff.insert(6, " "+MemberEnum.PROPERTIES.toString());

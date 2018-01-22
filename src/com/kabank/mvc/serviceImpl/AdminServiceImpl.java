@@ -27,7 +27,7 @@ public class AdminServiceImpl implements AdminService{
 			sql= DDLEnum.CREATE_TABLE_MOBILE.toString();
 			break;
 		}
-		dao.createTable(sql);
+		//dao.createTable(sql);
 		
 	}
 

@@ -1,11 +1,12 @@
 package com.kabank.mvc.service;
 
-import com.kabank.mvc.domain.MemberBean;
+import com.kabank.mvc.command.Command;
+import com.kabank.mvc.command.ResultMap;
 
 public interface MemberService {
-	public MemberBean findMemberById(MemberBean member);
-	public MemberBean login();
-	public void changePass(MemberBean member);
-	public abstract void delete();
-	public abstract void join();
+	public ResultMap findMemberById(Command cmd);
+	public ResultMap login(Command cmd);
+	public ResultMap changePass(Command cmd);
+	public ResultMap delete(Command cmd);
+	public ResultMap join(Command cmd);
 }
